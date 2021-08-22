@@ -1,0 +1,52 @@
+node :
+  - name : node0
+    ip : http://34.97.23.118:9000
+  - name : node1
+    ip : http://34.97.202.145:9000
+  - name : node2
+    ip : http://34.97.177.55:9000
+  - name : node3
+    ip : http://34.97.16.82:9000
+  - name : node4
+    ip : http://34.97.219.137:9000
+
+channel :
+  - name : "loopchain_default1"
+    nodes : [node0, node1, node2, node3, node4]
+  - name : "loopchain_default2"
+    nodes : [node0, node1, node2, node3, node4]
+  - name : "loopchain_default3"
+    nodes : [node0, node1, node2, node3, node4]
+
+prometheus:
+  prometheusExternal : http://localhost:9090
+  prometheusISAAC : http://prometheus:9090
+  queryPath : /api/v1/query
+  crawlingInterval : 3
+  nodeType : loopchain     # Can be used Node type (loopchain, goloop)
+  jobNameOfgoloop : goloop  # If using the goloop, should set the job name of prometheus.
+
+blockchain:
+  crawlingInterval: 10
+  db:
+    - type: mysql
+      id: isaac
+      pass: helloworld123
+      database: tcp(mysql:3306)/blockdb
+      path: 
+
+etc :
+  sessionTimeout: 30
+  expiredPeriodPass: 90
+  language: ko
+  loglevel: 1
+  db:
+    - type: sqlite3
+      id: ""
+      pass: ""
+      database: ""
+      path: data/isaac.db
+  loginLogoImagePath: images/iconloop.png
+
+authorization:
+  thirdPartyUserAPI: [channels]			# Can be used API list is channels, nodes, blocks, txs.

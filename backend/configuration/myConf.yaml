@@ -1,0 +1,35 @@
+node :
+  - name : node0
+    ip : https://int-test-ctz.solidwallet.io
+  - name : node1
+    ip : https://int-test-ctz.solidwallet.io
+  - name : node2
+    ip : https://int-test-ctz.solidwallet.io
+  - name: node3
+    ip : https://int-test-ctz.solidwallet.io
+  - name: node4
+    ip : https://int-test-ctz.solidwallet.io
+
+channel :
+  - name : "default"
+    nodes : [node0, node1, node2, node3, node4]
+
+prometheus :
+  prometheus: http://localhost:9090
+  queryPath: /api/v1/query
+  crawlingInterval: 5
+
+etc :
+  sessionTimeout: 30
+  language: ko
+  loglevel: 1
+  db:
+    - type: sqlite3
+      id: ""
+      pass: ""
+      database: ""
+      path: data/isaac.db
+  loginLogoImagePath: images/iconloop.png
+
+authorizationAPI:
+  thirdPartyUser: channels, nodes, blocks, txs			#channels, nodes, blocks, txs

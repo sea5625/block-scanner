@@ -1,0 +1,26 @@
+node :
+  - name : node0
+    ip : https://int-test-ctz.solidwallet.io
+  - name : node1
+    ip : https://int-test-ctz.solidwallet.io
+  - name : node2
+    ip : https://int-test-ctz.solidwallet.io
+
+channel :
+  - name : "loopchain_default"
+    nodes : [node0, node1, node2]
+  - name : "loopchain_default2"
+    nodes : [node1, node2]
+
+prometheus :
+  prometheus: http://localhost:9090
+  queryPath: /api/v1/query
+  crawlingInterval: 5
+etc:
+  sessionTimeout: 30
+  language: ko
+loglevel: 1
+blockchain:
+  crawlingInterval: 0
+
+

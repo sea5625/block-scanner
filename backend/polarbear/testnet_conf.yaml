@@ -1,0 +1,21 @@
+node :
+  - name : node0
+    ip : https://bicon.net.solidwallet.io
+  - name : node1
+    ip : https://bicon.net.solidwallet.io
+  - name : node2
+    ip : https://bicon.net.solidwallet.io
+
+channel :
+  - name : "default"
+    nodes : [node0, node1, node2]
+
+
+prometheus :
+  prometheus: http://prometheus:9090
+  queryPath: /api/v1/query
+  crawlingInterval: 2
+
+etc :
+  sessionTimeout: 30
+  language: ko

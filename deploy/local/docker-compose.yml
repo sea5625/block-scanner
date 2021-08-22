@@ -1,0 +1,57 @@
+version: "3.4"
+volumes:
+  prometheus:
+
+services:
+  prometheus:
+    image: "prom/prometheus:v2.11.0"
+    volumes:
+      - ./conf:/prometheus_conf
+      - prometheus:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/prometheus_conf/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+  loopchain_exporter:
+    image: "iconloop/loopchain_exporter:0.0.8a"
+    volumes:
+      - ./conf:/conf
+    environment:
+      - INTERVAL=3
+      - TIMEOUT=2
+    ports:
+      - "9095:9095"
+    depends_on:
+      - prometheus
+  mysql:
+    image: "mysql:5.7"
+    restart: always
+    environment:
+      - MYSQL_DATABASE=blockdb
+      - MYSQL_USER=isaac
+      - MYSQL_PASSWORD=helloworld123
+      - MYSQL_ROOT_PASSWORD=root123
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql/db:/var/lib/mysql
+      - ./data/mysql/config:/etc/mysql/conf.d
+
+  isaac:
+    image: "iconloop/isaac:dev"
+    restart: always
+    volumes:
+      - ./conf:/config
+      - ./images:/images
+      - ./data/isaac/data:/data
+      - ./data/isaac/log:/log
+    depends_on:
+      - prometheus
+      - mysql
+      - loopchain_exporter
+    links:
+      - prometheus
+      - mysql
+    ports:
+      - "6553:6553"
